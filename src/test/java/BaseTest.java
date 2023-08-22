@@ -24,11 +24,13 @@ public class BaseTest {
     }
     @BeforeMethod
     public void launchBrowser() {
-        //      Added ChromeOptions argument below to fix websocket error
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
+
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
     }
     @AfterMethod
     public void closeBrowser() {
@@ -51,6 +53,11 @@ public class BaseTest {
         WebElement submit = driver.findElement(By.cssSelector("button[type='submit']"));
         submit.click();
     }
+    public void logIn() {
+        provideEmail("camden.bertrand@testpro.io");
+        providePassword("te$t$tudent");
+        clickSubmit();
+    }
     public void searchSong() throws InterruptedException {
         WebElement searchField = driver.findElement(By.cssSelector("input[type='search']"));
         searchField.clear();
@@ -63,7 +70,7 @@ public class BaseTest {
         Thread.sleep(2000);
     }
     public void clickFirstSong() throws InterruptedException {
-        WebElement firstSong = driver.findElement(By.cssSelector("#songResultsWrapper>div>div>div.item-container>table>tr:first-child"));
+        WebElement firstSong = driver.findElement(By.cssSelector("#songResultsWrapper tr.song-item:first-child"));
         firstSong.click();
         Thread.sleep(2000);
     }
