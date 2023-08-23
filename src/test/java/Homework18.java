@@ -10,7 +10,7 @@ public class Homework18 extends BaseTest{
         logIn();
         playNext();
         clickPlayBtn();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         WebElement pauseBtn = driver.findElement(By.cssSelector("span i[class='fa fa-pause']"));
         Assert.assertTrue(pauseBtn.isDisplayed());
     }
