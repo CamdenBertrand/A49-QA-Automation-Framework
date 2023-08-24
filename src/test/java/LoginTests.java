@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 public class LoginTests extends BaseTest {
     
     @Test(dataProvider = "csvData")
-    public void loginInvalidCredentials(String email, String password) throws InterruptedException {
+    public void loginInvalidCredentials(String email, String password) throws InterruptedException{
         navigateToPage();
         provideEmail(email);
         providePassword(password);
