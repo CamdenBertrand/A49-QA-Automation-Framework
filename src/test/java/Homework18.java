@@ -3,24 +3,29 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Homework18 extends BaseTest{
-    @Test
-    public void playSong() throws InterruptedException {
+public class Homework18 extends BaseTest {
+    
+    @Test()
+    public void playSong () throws InterruptedException {
         navigateToPage();
-        logIn();
-        playNext();
-        clickPlayBtn();
-        Thread.sleep(2000);
-        WebElement pauseBtn = driver.findElement(By.cssSelector("span i[class='fa fa-pause']"));
-        Assert.assertTrue(pauseBtn.isDisplayed());
+        provideEmail("demo@class.com");
+        providePassword("te$t$tudent");
+        clickSubmit();
+        Thread.sleep(3000);
+        clickPlayNextBtn();
+        checkSongIsPlaying();
     }
-    public void clickPlayBtn() {
-        WebElement playBtn = driver.findElement(By.cssSelector("footer span i[class='fa fa-play']"));
+
+    private void checkSongIsPlaying() {
+        WebElement soundBar = driver.findElement(By.cssSelector("[data-testid='sound-bar-play']"));
+        Assert.assertTrue(soundBar.isDisplayed());
+    }
+
+    private void clickPlayNextBtn() throws InterruptedException {
+        WebElement playNextBtn= driver.findElement(By.cssSelector("[data-testid='play-next-btn']"));
+        playNextBtn.click();
+        WebElement playBtn= driver.findElement(By.cssSelector("[data-testid='play-btn']"));
         playBtn.click();
     }
 
-    public void playNext() {
-        WebElement playNext = driver.findElement(By.cssSelector("[data-testid='play-next-btn']"));
-        playNext.click();
-    }
 }
