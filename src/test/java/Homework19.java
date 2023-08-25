@@ -15,6 +15,7 @@ public class Homework19 extends BaseTest{
         clickPlaylist();
         WebElement deletePlstBtn = driver.findElement(By.cssSelector("button[title='Delete this playlist']"));
         deletePlstBtn.click();
+        Thread.sleep(2000);
         Assert.assertEquals(verifyNoti(), notiMsg);
     }
 }
