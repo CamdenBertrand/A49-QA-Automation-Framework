@@ -1,10 +1,10 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -13,10 +13,9 @@ import org.testng.annotations.*;
 import java.time.Duration;
 import java.util.UUID;
 
-import static java.lang.Thread.sleep;
-
 public class BaseTest {
     public static WebDriver driver = null;
+    public static Actions actions = null;
     //ublic static String url = "https://qa.koel.app/";
      public static String url;
     WebDriverWait wait;
@@ -34,7 +33,8 @@ public class BaseTest {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver,Duration.ofSeconds(20));
+        actions = new Actions(driver);
     }
     @AfterMethod
     public void closeBrowser() {
@@ -72,6 +72,41 @@ public class BaseTest {
         viewAllBtn.click();
 
     }
+    public String generateRandomName() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+    protected void loginCorrectCred() {
+        navigateToPage();
+        provideEmail("demo@class.com");
+        providePassword("te$t$tudent");
+        clickSubmit();
+    }
+
+    void clickOnElement(By locator){
+        WebElement el= wait.until(ExpectedConditions.elementToBeClickable(locator));
+        el.click();
+    }
+    void enterText(By locator, String text){
+        WebElement el= wait.until(ExpectedConditions.elementToBeClickable(locator));
+        el.click();
+        el.clear();
+        el.sendKeys(text);
+    }
+
+    private void clickOnOk() {
+        WebElement okBtn = driver.findElement(By.cssSelector(".ok"));
+        okBtn.click();
+    }
+
+    protected void checkShowSuccess() {
+        WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
+        Assert.assertTrue(notification.isDisplayed());
+    }
+
+    protected void clickOnPlaylist(String playlistName) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'" + playlistName + "')]"))).click();
+    }
+
     public void clickFirstSong() throws InterruptedException {
         WebElement firstSong = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#songResultsWrapper tr.song-item:first-child")));
         firstSong.click();
