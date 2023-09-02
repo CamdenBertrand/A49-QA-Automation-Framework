@@ -8,16 +8,16 @@ public class Homework17 extends BaseTest{
     public void addSongToPlaylist() throws InterruptedException {
         String notiMsg = "Added 1 song into \"First.\"";
 
-        navigateToPage();
-        provideEmail("camden.bertrand@testpro.io");
-        providePassword("te$t$tudent");
-        clickSubmit();
-        searchSong();
-        clickViewAll();
-        clickFirstSong();
-        clickAddTo();
-        clickPlaylist();
-        Assert.assertEquals(verifyNoti(), notiMsg);
+        loginPage.loginCorrectCred();
+        loginPage.provideEmail("camden.bertrand@testpro.io");
+        loginPage.providePassword("te$t$tudent");
+        loginPage.clickSubmitBtn();
+        homePage.searchSong();
+        homePage.clickViewAll();
+        homePage.clickFirstSong();
+        homePage.clickAddTo();
+        homePage.clickPlaylist();
+        basePage.checkShowSuccess();
 
     }
 

@@ -12,8 +12,7 @@ public class Homework21 extends BaseTest{
     @Test
     public void renamePlaylist() {
         playListName = "First";
-        navigateToPage();
-        logIn();
+        loginPage.loginCorrectCred();
         doubleClickOnPlaylist(playListName);
         enterNewPlaylistName(playListName);
         checkMessage();

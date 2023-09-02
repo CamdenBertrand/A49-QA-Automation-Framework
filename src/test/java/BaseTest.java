@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pages.BasePage;
+import pages.HomePage;
+import pages.LoginPage;
+import pages.PlaylistPage;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -16,119 +20,39 @@ import java.util.UUID;
 public class BaseTest {
     public static WebDriver driver = null;
     public static Actions actions = null;
-    //ublic static String url = "https://qa.koel.app/";
-     public static String url;
-    WebDriverWait wait;
+    public String url = "https://qa.koel.app/";
+
+    public WebDriverWait wait;
+    BasePage basePage;
+    LoginPage loginPage;
+    HomePage homePage;
+    PlaylistPage playListPage;
     @BeforeSuite
     static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
-    @BeforeMethod
-    @Parameters({"BaseURL"})
-    public void launchBrowser(String BaseURL) {
+   @BeforeClass
+    public void launchBrowser() {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-        url = BaseURL;
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         actions = new Actions(driver);
+        basePage = new BasePage(driver, wait, actions);
+        basePage.navigateToPage(url);
+        loginPage = new LoginPage(driver, wait, actions);
+        homePage = new HomePage(driver, wait,actions);
+        playListPage = new PlaylistPage(driver, wait, actions);
+
+
     }
-    @AfterMethod
+    @AfterClass
     public void closeBrowser() {
-        driver.quit();
-    }
-    public  void navigateToPage() {
-        driver.get(url);
-    }
-    public static void provideEmail(String email) {
-        WebElement emailField = driver.findElement(By.cssSelector("input[type='email']"));
-        emailField.clear();
-        emailField.sendKeys(email);
-    }
-    public static void providePassword(String password) {
-        WebElement passwordField = driver.findElement(By.cssSelector("input[type='password']"));
-        passwordField.clear();
-        passwordField.sendKeys(password);
-    }
-    public void clickSubmit() {
-        WebElement submit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[type='submit']")));
-        submit.click();
-    }
-    public void logIn() {
-        provideEmail("camden.bertrand@testpro.io");
-        providePassword("te$t$tudent");
-        clickSubmit();
-    }
-    public void searchSong() throws InterruptedException {
-        WebElement searchField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='search']")));
-        searchField.clear();
-        searchField.sendKeys("Dark");
-    }
-    public void clickViewAll() throws InterruptedException {
-        WebElement viewAllBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#searchExcerptsWrapper>div>div>section.songs>h1>button")));
-        viewAllBtn.click();
-
-    }
-    public String generateRandomName() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
-    protected void loginCorrectCred() {
-        navigateToPage();
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
+        basePage.quitBrowser();
     }
 
-    void clickOnElement(By locator){
-        WebElement el= wait.until(ExpectedConditions.elementToBeClickable(locator));
-        el.click();
-    }
-    void enterText(By locator, String text){
-        WebElement el= wait.until(ExpectedConditions.elementToBeClickable(locator));
-        el.click();
-        el.clear();
-        el.sendKeys(text);
-    }
 
-    private void clickOnOk() {
-        WebElement okBtn = driver.findElement(By.cssSelector(".ok"));
-        okBtn.click();
-    }
-
-    protected void checkShowSuccess() {
-        WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
-        Assert.assertTrue(notification.isDisplayed());
-    }
-
-    protected void clickOnPlaylist(String playlistName) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'" + playlistName + "')]"))).click();
-    }
-
-    public void clickFirstSong() throws InterruptedException {
-        WebElement firstSong = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#songResultsWrapper tr.song-item:first-child")));
-        firstSong.click();
-    }
-    public void clickAddTo() throws InterruptedException {
-        WebElement addToBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[data-test='add-to-btn']")));
-        addToBtn.click();
-    }
-    public void clickPlaylist() throws InterruptedException {
-        WebElement firstPlaylistBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li[class='playlist playlist']")));
-        firstPlaylistBtn.click();
-    }
-    public String verifyNoti() {
-        WebElement notificationDisplayed = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
-        return notificationDisplayed.getText();
-    }
-    @DataProvider(name = "csvData")
-    public Object[][] getDatafromDataProvider(){
-        return new Object[][]{
-            {"incorrectemail@test.com", "badPassword"},
-            {"demo@class.com", ""},
-            {"", ""}
-        } ;
-    }
 }

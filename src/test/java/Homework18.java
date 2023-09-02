@@ -7,13 +7,9 @@ public class Homework18 extends BaseTest {
     
     @Test()
     public void playSong () throws InterruptedException {
-        navigateToPage();
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
-        Thread.sleep(3000);
-        clickPlayNextBtn();
-        checkSongIsPlaying();
+        loginPage.loginCorrectCred();
+       homePage.clickPlay();
+        homePage.checkSongIsPlaying();
     }
 
     private void checkSongIsPlaying() {

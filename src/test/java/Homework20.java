@@ -9,14 +9,10 @@ public class Homework20 extends BaseTest{
     public void deletePlaylist() throws InterruptedException {
         String notiMsg = "Deleted playlist \"First.\"";
 
-        navigateToPage();
-        provideEmail("camden.bertrand@testpro.io");
-        providePassword("te$t$tudent");
-        clickSubmit();
-        clickPlaylist();
+        loginPage.loginCorrectCred();
+        homePage.clickPlaylist();
         WebElement deletePlstBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[title='Delete this playlist']")));
         deletePlstBtn.click();
-
-        Assert.assertEquals(verifyNoti(), notiMsg);
+        basePage.checkShowSuccess();
     }
 }
