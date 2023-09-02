@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 public class ActionsTest extends BaseTest {
 
     @Test
-    void contextClickOnSong() throws InterruptedException {
+    void contextClickOnSong() {
         loginPage.loginCorrectCred();
         homePage.clickAllSongs();
         playListPage.contextClickSongByName("Reactor");
