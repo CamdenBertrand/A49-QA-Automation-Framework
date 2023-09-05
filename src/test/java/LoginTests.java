@@ -1,3 +1,4 @@
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
@@ -13,6 +14,8 @@ public class LoginTests extends BaseTest {
         loginPage.provideEmail("camden.bertrand@testpro.io");
         loginPage.providePassword("te$t$tudent");
         loginPage.clickSubmitBtn();
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+
     }
 
 }

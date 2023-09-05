@@ -10,7 +10,7 @@ public class HomePage extends BasePage{
     public HomePage (WebDriver driver) {
         super(driver);
     }
-    By playPanel = By.cssSelector(".side.player-controls");
+    By userAvatarIcon = By.cssSelector("img.avatar");
     By allSongsBtn = By.cssSelector("li a.songs");
     By searchField = By.cssSelector("input[type='search']");
     By viewAllBtn = By.cssSelector("#searchExcerptsWrapper>div>div>section.songs>h1>button");
@@ -22,6 +22,9 @@ public class HomePage extends BasePage{
     By playBtnBot = By.cssSelector("[data-testid='play-btn']");
     By playPan = By.cssSelector(".side.player-controls");
 
+    public WebElement getUserAvatar(){
+        return findElement(userAvatarIcon);
+    }
     public void clickPlay() {
         findElement(playbackBtn).click();
     }

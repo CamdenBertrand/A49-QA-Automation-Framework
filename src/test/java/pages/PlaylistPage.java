@@ -15,7 +15,7 @@ public class PlaylistPage extends BasePage {
     By createNewPlaylistCon = By.cssSelector("[data-testid='playlist-context-menu-create-simple']");
     By createPlaylistBtn = By.cssSelector("[data-testid='sidebar-create-playlist-btn']");
     By playlistInput = By.cssSelector("input[name='name']");
-    By deletePlaylist = By.cssSelector(".del.btn-delete-playlist");
+
 
     By playNoti = By.xpath("//*[contains(text(),'Updated playlist')]");
 
@@ -55,6 +55,7 @@ public class PlaylistPage extends BasePage {
     }
 
     public void clickOnDeletePlaylistBtn() {
+        By deletePlaylist = By.cssSelector(".del.btn-delete-playlist");
         WebElement deletePlaylistBtn = wait.until(ExpectedConditions.elementToBeClickable(deletePlaylist));
         actions.click(deletePlaylistBtn).perform();
     }
