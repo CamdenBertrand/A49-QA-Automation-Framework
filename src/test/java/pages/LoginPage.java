@@ -2,18 +2,17 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class LoginPage extends BasePage{
 
-    public LoginPage(WebDriver driver, WebDriverWait wait, Actions actions) {
-        super(driver, wait, actions);
+    public LoginPage(WebDriver driver) {
+        super(driver);
     }
+
+    By emailField = By.cssSelector("input[type='email']");
+    By passwordField = By.cssSelector("input[type='password']");
+    By submitBtn = By.cssSelector("button[type='submit']");
+
     public void loginCorrectCred() {
         provideEmail("camden.bertrand@testpro.io");
         providePassword("te$t$tudent");
@@ -22,16 +21,15 @@ public class LoginPage extends BasePage{
 
 
     public void provideEmail(String email) {
-        enterText(By.cssSelector("input[type='email']"), email);
+        findElement(emailField).sendKeys(email);
     }
 
     public void providePassword(String password) {
-
-        enterText(By.cssSelector("input[type='password']"), password);
+        findElement(passwordField).sendKeys(password);
     }
 
     public void clickSubmitBtn() {
-        clickOnElement(By.cssSelector("button[type='submit']"));
+        findElement(submitBtn).click();
     }
 
 

@@ -12,13 +12,13 @@ import java.time.Duration;
 import java.util.UUID;
 
 public class BasePage {
-    WebDriver driver;
-    WebDriverWait wait;
-    Actions actions;
-    public BasePage(WebDriver driver, WebDriverWait wait, Actions actions) {
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+    protected Actions actions;
+    public BasePage(WebDriver driver) {
         this.driver = driver;
-        this.wait = wait;
-        this.actions = actions;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        actions = new Actions(driver);
     }
     public  void navigateToPage(String url) { driver.get(url); }
 

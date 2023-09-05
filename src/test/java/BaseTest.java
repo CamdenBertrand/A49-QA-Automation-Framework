@@ -1,3 +1,5 @@
+import com.github.hemanthsridhar.CSVUtils;
+import com.github.hemanthsridhar.lib.ExtUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,41 +20,30 @@ import java.time.Duration;
 import java.util.UUID;
 
 public class BaseTest {
-    public static WebDriver driver = null;
-    public static Actions actions = null;
+    public WebDriver driver ;
     public String url = "https://qa.koel.app/";
-
-    public WebDriverWait wait;
     BasePage basePage;
-    LoginPage loginPage;
-    HomePage homePage;
-    PlaylistPage playListPage;
+
     @BeforeSuite
     static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
-   @BeforeClass
-    public void launchBrowser() {
 
+    @BeforeClass
+    public void launchBrowser() {
+        //Added ChromeOptions argument below to fix websocket error
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        actions = new Actions(driver);
-        basePage = new BasePage(driver, wait, actions);
+        //instantiate Explicit wait
+        basePage = new BasePage(driver);
         basePage.navigateToPage(url);
-        loginPage = new LoginPage(driver, wait, actions);
-        homePage = new HomePage(driver, wait,actions);
-        playListPage = new PlaylistPage(driver, wait, actions);
-
-
     }
+
     @AfterClass
     public void closeBrowser() {
         basePage.quitBrowser();
     }
-
-
 }

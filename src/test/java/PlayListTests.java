@@ -1,39 +1,39 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pages.LoginPage;
+import pages.PlaylistPage;
 
 public class PlayListTests extends BaseTest {
-    String playListName ;
+    LoginPage loginPage;
+    PlaylistPage playlistPage;
+    public String playListName ;
     @BeforeClass
     void login(){
+        loginPage = new LoginPage(driver);
+        playlistPage = new PlaylistPage(driver);
         loginPage.loginCorrectCred();
-        playListName ="Tester777";
+        playListName ="NataliasPlaylist"+basePage.generateRandomName();
     }
     @Test(priority = 1)
     public void createPlaylist()  {
-        playListPage.clickOnCreatePlaylistBtn();
-        playListPage.clickOnCreateNewPlaylist();
-        playListPage.enterNewPlaylistName(playListName);
+        playlistPage.clickOnCreatePlaylistBtn();
+        playlistPage.clickOnCreateNewPlaylist();
+        playlistPage.enterNewPlaylistName(playListName);
         basePage.checkShowSuccess();
     }
     @Test(priority = 2)
     public void renamePlaylist()  {
-        playListPage.doubleClickOnPlaylist(playListName);
+        playlistPage.doubleClickOnPlaylist(playListName);
         playListName ="Updated"+ playListName;
-        playListPage.enterNewPlaylistName(playListName);
-        playListPage.checkMessage();
+        playlistPage.enterNewPlaylistName(playListName);
+        basePage.checkShowSuccess();
     }
 
     @Test(priority = 3)
     public void deletePlaylist()  {
-        playListPage.clickOnPlaylist(playListName);
-        playListPage.clickOnDeletePlaylistBtn();
+        playlistPage.clickOnPlaylist(playListName);
+        playlistPage.clickOnDeletePlaylistBtn();
         basePage.checkShowSuccess();
     }
-
 
 }

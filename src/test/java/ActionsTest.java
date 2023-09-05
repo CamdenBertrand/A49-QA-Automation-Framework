@@ -1,31 +1,37 @@
-
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import pages.HomePage;
+import pages.LoginPage;
 
 public class ActionsTest extends BaseTest {
+    LoginPage loginPage;
+    HomePage homePage ;
 
-    @Test
-    void contextClickOnSong() {
+    @BeforeClass
+    void login(){
+        loginPage = new LoginPage(driver);
+        homePage = new HomePage(driver);
         loginPage.loginCorrectCred();
+    }
+    @Test
+    void contextClickOnSong()  {
         homePage.clickAllSongs();
-        playListPage.contextClickSongByName("Reactor");
+        homePage.contextClickSongByName("Reactor");
         homePage.clickPlay();
         homePage.checkSongIsPlaying();
     }
 
     @Test
     void mouseHoverTest() {
-        loginPage.loginCorrectCred();
         homePage.clickAllSongs();
         homePage.mouseMoveToPlayBtn();
         homePage.checkIfPlayBtnIsVisible();
     }
-    @Test
-    void checkPlaylistSongs() {
-        loginPage.loginCorrectCred();
-        playListPage.clickOnPlaylist("newFirst");
-        playListPage.checkNumberOfSongsInPlaylist();
-    }
-
-
+//    COMMENTED OUT AS THAT PLAYLIST NEEDS TO BE CREATED BEFORE THE TEST
+//    @Test
+//    void checkPlaylistSongs()  {
+//        loginPage.loginCorrectCred();
+//        homePage.clickOnPlaylist("Play List With Songs");
+//        playlistPage.checkNumberOfSongsInPlaylist();
+//    }
 }
