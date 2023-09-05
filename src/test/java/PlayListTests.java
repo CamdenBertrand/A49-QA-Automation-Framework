@@ -6,13 +6,13 @@ import pages.PlaylistPage;
 public class PlayListTests extends BaseTest {
     LoginPage loginPage;
     PlaylistPage playlistPage;
-    public String playListName ;
+    public String playListName;
     @BeforeClass
     void login(){
         loginPage = new LoginPage(driver);
         playlistPage = new PlaylistPage(driver);
         loginPage.loginCorrectCred();
-        playListName ="NataliasPlaylist"+basePage.generateRandomName();
+        playListName ="CamdensPlaylist"+basePage.generateRandomName();
     }
     @Test(priority = 1)
     public void createPlaylist()  {
@@ -26,7 +26,7 @@ public class PlayListTests extends BaseTest {
         playlistPage.doubleClickOnPlaylist(playListName);
         playListName ="Updated"+ playListName;
         playlistPage.enterNewPlaylistName(playListName);
-        basePage.checkShowSuccess();
+        playlistPage.checkMessage(playListName);
     }
 
     @Test(priority = 3)

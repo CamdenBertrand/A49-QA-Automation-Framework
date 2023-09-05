@@ -44,7 +44,8 @@ public class BasePage {
         okBtn.click();
     }
     public void checkShowSuccess() {
-        WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
+        By successNoti = By.cssSelector("div.success.show");
+        WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(successNoti));
         Assert.assertTrue(notification.isDisplayed());
     }
     public void quitBrowser(){

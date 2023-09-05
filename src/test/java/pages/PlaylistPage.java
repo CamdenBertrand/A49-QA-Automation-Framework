@@ -14,10 +14,9 @@ public class PlaylistPage extends BasePage {
     By allSongsLoc = By.cssSelector(".song-list-wrap.main-scroll-wrap.playlist td.title");
     By createNewPlaylistCon = By.cssSelector("[data-testid='playlist-context-menu-create-simple']");
     By createPlaylistBtn = By.cssSelector("[data-testid='sidebar-create-playlist-btn']");
-    By playlistInput = By.cssSelector("[name='name']");
+    By playlistInput = By.cssSelector("input[name='name']");
     By deletePlaylist = By.cssSelector(".del.btn-delete-playlist");
 
-    By playlistElemLoc = By.xpath("//a[contains(text(),'" + playListName + "')]");
     By playNoti = By.xpath("//*[contains(text(),'Updated playlist')]");
 
     public PlaylistPage(WebDriver driver) {
@@ -48,9 +47,9 @@ public class PlaylistPage extends BasePage {
         WebElement playlistInputField = wait.until(ExpectedConditions.visibilityOfElementLocated(playlistInput));
 //       clear() does not work, element has an attribute of "required"
 //       workaround is ctrl A (to select all) then backspace to clear then replace with new playlist name
-//        playlistInputField.sendKeys(Keys.chord(Keys.CONTROL,"A", Keys.BACK_SPACE));
+        playlistInputField.sendKeys(Keys.chord(Keys.CONTROL,"A", Keys.BACK_SPACE));
         //FOR MAC
-        playlistInputField.sendKeys(Keys.chord(Keys.COMMAND,"A", Keys.BACK_SPACE));
+        //playlistInputField.sendKeys(Keys.chord(Keys.COMMAND,"A", Keys.BACK_SPACE));
         playlistInputField.sendKeys(newPlayListName);
         playlistInputField.sendKeys(Keys.ENTER);
     }
@@ -60,19 +59,19 @@ public class PlaylistPage extends BasePage {
         actions.click(deletePlaylistBtn).perform();
     }
 
-
+    public void clickOnPlaylist(String playListName) {
+        By playlistElClick = By.xpath("//a[contains(text()," + playListName + ")]");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(playlistElClick));}
 
     public void doubleClickOnPlaylist(String playlistName) {
-        WebElement playlistElement =wait.until(ExpectedConditions.visibilityOfElementLocated(playlistElemLoc));
+        By playlistElDblClick = By.xpath("//a[contains(text(),'" + playlistName + "')]");
+        WebElement playlistElement = wait.until(ExpectedConditions.visibilityOfElementLocated(playlistElDblClick));
         actions.doubleClick(playlistElement).perform();
     }
 
     public void checkMessage(String playListName) {
         WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(playNoti));
         Assert.assertEquals("Updated playlist \""+playListName+".\"",notification.getText());
-    }
-    public void clickOnPlaylist(String playlistName) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(playlistElemLoc)).click();
     }
 
 }

@@ -43,8 +43,8 @@ public class HomePage extends BasePage{
     }
 
     public void contextClickSongByName(String songName)  {
-        WebElement song =wait.until(ExpectedConditions.
-                elementToBeClickable(By.xpath("//section[@id='songsWrapper']//td[text()='"+songName+"']")));
+        By songNameEl = By.xpath("//section[@id='songsWrapper']//td[text()='"+songName+"']");
+        WebElement song =wait.until(ExpectedConditions.elementToBeClickable(songNameEl));
         actions.contextClick(song).perform();
     }
 

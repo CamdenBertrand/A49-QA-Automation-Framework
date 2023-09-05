@@ -13,7 +13,7 @@ public class ActionsTest extends BaseTest {
         homePage = new HomePage(driver);
         loginPage.loginCorrectCred();
     }
-    @Test
+    @Test (priority = 2)
     void contextClickOnSong()  {
         homePage.clickAllSongs();
         homePage.contextClickSongByName("Reactor");
@@ -21,7 +21,7 @@ public class ActionsTest extends BaseTest {
         homePage.checkSongIsPlaying();
     }
 
-    @Test
+    @Test (priority = 1)
     void mouseHoverTest() {
         homePage.clickAllSongs();
         homePage.mouseMoveToPlayBtn();
