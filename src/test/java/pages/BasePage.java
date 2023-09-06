@@ -23,6 +23,7 @@ public class BasePage {
         actions = new Actions(driver);
         PageFactory.initElements(driver,this);
     }
+
     public void navigateToPage(String url) {
         driver.get(url);
     }

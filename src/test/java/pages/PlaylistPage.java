@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
@@ -14,6 +15,18 @@ public class PlaylistPage extends BasePage{
     public PlaylistPage(WebDriver driver) {
         super(driver);
     }
+
+    @FindBy (css ="[data-testid='playlist-context-menu-create-simple']")
+    WebElement createSPlaylistCon;
+    @FindBy (css = "[data-testid='sidebar-create-playlist-btn']")
+    WebElement createPlaylistBtn;
+
+    @FindBy (css = "[name='name']")
+    WebElement playlistInputField;
+
+    @FindBy (css = ".del.btn-delete-playlist")
+    WebElement deletePlaylistBtn;
+
     public PlaylistPage checkNumberOfSongsInPlaylist() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".song-list-wrap.main-scroll-wrap.playlist td.title")));
         List<WebElement> allSongsInPlaylist =driver.findElements(By.cssSelector(".song-list-wrap.main-scroll-wrap.playlist td.title"));
@@ -26,33 +39,29 @@ public class PlaylistPage extends BasePage{
         return this;
     }
     public PlaylistPage clickOnCreateNewPlaylist() {
-        wait.until(ExpectedConditions
-                        .visibilityOfElementLocated(By.cssSelector("[data-testid='playlist-context-menu-create-simple']")))
-                .click();
+        wait.until(ExpectedConditions.elementToBeClickable(createSPlaylistCon)).click();
         return this;
     }
 
     public PlaylistPage clickOnCreatePlaylistBtn() {
-        wait.until(ExpectedConditions
-                        .visibilityOfElementLocated(By.cssSelector("[data-testid='sidebar-create-playlist-btn']")))
-                .click();
+        wait.until(ExpectedConditions.elementToBeClickable(createPlaylistBtn)).click();
         return this;
     }
 
     public PlaylistPage enterNewPlaylistName(String newPlayListName) {
-        WebElement playlistInputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[name='name']")));
+        wait.until(ExpectedConditions.elementToBeClickable(playlistInputField));
 //       clear() does not work, element has an attribute of "required"
 //       workaround is ctrl A (to select all) then backspace to clear then replace with new playlist name
-//        playlistInputField.sendKeys(Keys.chord(Keys.CONTROL,"A", Keys.BACK_SPACE));
+        playlistInputField.sendKeys(Keys.chord(Keys.CONTROL,"A", Keys.BACK_SPACE));
         //FOR MAC
-        playlistInputField.sendKeys(Keys.chord(Keys.COMMAND,"A", Keys.BACK_SPACE));
+        //playlistInputField.sendKeys(Keys.chord(Keys.COMMAND,"A", Keys.BACK_SPACE));
         playlistInputField.sendKeys(newPlayListName);
         playlistInputField.sendKeys(Keys.ENTER);
         return this;
     }
 
     public PlaylistPage clickOnDeletePlaylistBtn() {
-        WebElement deletePlaylistBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".del.btn-delete-playlist")));
+        wait.until(ExpectedConditions.elementToBeClickable(deletePlaylistBtn));
         actions.click(deletePlaylistBtn).perform();
         return this;
     }
