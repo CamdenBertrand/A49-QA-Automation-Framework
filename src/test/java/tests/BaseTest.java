@@ -16,30 +16,27 @@ import java.net.URI;
 
 public class BaseTest {
     public WebDriver driver ;
+
     public String url = "https://qa.koel.app/";
 
-
     @BeforeSuite
-    public void setupSuit() throws MalformedURLException {
+    public void setupSuite() throws MalformedURLException {
         String browser = System.getProperty("browser");
-        driver=setupBrowser(browser);
+        driver = setupBrowser(browser);
     }
     @AfterClass
     public void closeBrowser() {
         driver.quit();
     }
+
     WebDriver setupBrowser(String browser) throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
-        //To start the grid server run this command below in command line (go to download location first)
-        //java -jar selenium-server-4.12.0.jar standalone --selenium-manager true
-        String gridURL = "http://192.168.1.105:4444";
-        switch(browser) {
+        String gridURL = "http://192.168.56.1:4444";
+        switch(browser){
             case "firefox":
                 return setupFirefox();
             case "chrome":
                 return setupChrome();
-            case "safari":
-                return setupSafari();
             case "grid-chrome":
                 caps.setCapability("browserName", "chrome");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
@@ -47,17 +44,13 @@ public class BaseTest {
                 caps.setCapability("browserName", "firefox");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
             default:
-                return setupChrome();
+                caps.setCapability("browserName", "chrome");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
         }
     }
     public WebDriver setupFirefox(){
         WebDriverManager.firefoxdriver().setup();
-        driver =new FirefoxDriver();
-        return driver;
-    }
-    public WebDriver setupSafari(){
-        WebDriverManager.safaridriver().setup();
-        driver =new SafariDriver();
+        driver = new FirefoxDriver();
         return driver;
     }
     public WebDriver setupChrome(){

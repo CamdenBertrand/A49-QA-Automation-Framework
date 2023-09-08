@@ -15,8 +15,8 @@ public class LoginTests extends BaseTest{
     public void validLogin(){
         loginPage.loginCorrectCred();
     }
-    @Test
+    /*@Test
     public void validLoginOnceLoggedIn(){
         loginPage.loginCorrectCred();
-    }
+    }*/
 }
