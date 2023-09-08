@@ -8,16 +8,17 @@ public class InvalidLoginTests extends BaseTest{
     LoginPage loginPage;
     @BeforeMethod
     void setup(){
-        loginPage = new LoginPage(driver);
-        driver.get(url);
+        loginPage= new LoginPage(getThreadDriver());
+        getThreadDriver().get(url);
     }
     @Test
-    public void invalidPasswordEmail(){
+    public void invalidPassword() throws InterruptedException {
         loginPage.provideEmail("incorrectEmail").providePassword("incotrerctPwd").clickSubmit();
+        Thread.sleep(3000);
     }
     @Test
-    public void emptyEmail(){
-        loginPage.provideEmail("").providePassword("incotrerctPwd").clickSubmit();
+    public void emptyPassword(){
+        loginPage.provideEmail("demo@class.com").providePassword("").clickSubmit();
     }
     @Test
     public void emptyEmailPassword(){

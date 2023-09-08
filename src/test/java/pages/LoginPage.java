@@ -12,10 +12,10 @@ import java.time.Duration;
 
 
 public class LoginPage extends BasePage {
-  WebDriverWait wait;
+    WebDriverWait wait;
     public LoginPage(WebDriver driver) {
         super(driver);
-       wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     }
     @FindBy (css ="input[type='email']")
@@ -33,9 +33,9 @@ public class LoginPage extends BasePage {
 
 
     public LoginPage provideEmail(String email) {
-       wait.until(ExpectedConditions.elementToBeClickable(emailField)).clear();
-       emailField.sendKeys(email);
-       return this;
+        wait.until(ExpectedConditions.elementToBeClickable(emailField)).clear();
+        emailField.sendKeys(email);
+        return this;
     }
 
     public LoginPage providePassword(String password) {
