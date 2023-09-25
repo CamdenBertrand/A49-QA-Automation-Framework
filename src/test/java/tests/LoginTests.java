@@ -11,10 +11,7 @@ public class LoginTests extends BaseTest{
         loginPage= new LoginPage(getThreadDriver());
         getThreadDriver().get(url);
     }
-    //    @Test
-//    public void validPassword() throws InterruptedException {
-//        loginPage.loginCorrectCred();
-//    }
+
     @Test
     public void validLoginPassword(){
         loginPage.loginCorrectCred();
